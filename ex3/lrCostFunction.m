@@ -1,4 +1,4 @@
-function [J, grad] = lrCostFunction(theta, X, y, lambda)
+ function [J, grad] = lrCostFunction(theta, X, y, lambda)
 %LRCOSTFUNCTION Compute cost and gradient for logistic regression with 
 %regularization
 %   J = LRCOSTFUNCTION(theta, X, y, lambda) computes the cost of using
@@ -9,8 +9,12 @@ function [J, grad] = lrCostFunction(theta, X, y, lambda)
 m = length(y); % number of training examples
 
 % You need to return the following variables correctly 
-J = 0;
-grad = zeros(size(theta));
+m = length(y); % number of training examples
+htheta = sigmoid(sum(theta'.*X, 2));
+J = 1/m * sum(-y.*log(htheta) .- (1 - y) .* log(1.0 - htheta)) + sum(lambda/2/m.*theta.^2);
+J = J - lambda/2/m * theta(1)^2; 
+grad = 1/m * sum((htheta-y) .* X, 1) .+ (lambda/m) * theta';
+grad(1) = grad(1) - lambda/m * theta(1);
 
 % ====================== YOUR CODE HERE ======================
 % Instructions: Compute the cost of a particular choice of theta.
@@ -35,15 +39,6 @@ grad = zeros(size(theta));
 %           temp(1) = 0;   % because we don't add anything for j = 0  
 %           grad = grad + YOUR_CODE_HERE (using the temp variable)
 %
-
-
-
-
-
-
-
-
-
 
 % =============================================================
 
