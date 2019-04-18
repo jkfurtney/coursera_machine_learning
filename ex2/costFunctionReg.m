@@ -5,8 +5,8 @@ function [J, grad] = costFunctionReg(theta, X, y, lambda)
 %   gradient of the cost w.r.t. to the parameters. 
 m = length(y); % number of training examples
 htheta = sigmoid(sum(theta'.*X, 2));
-J = 1/m * sum(-y.*log(htheta) .- (1 - y) .* log(1.0 - htheta)) + sum(lambda/2/m.*theta);
-%J = J - lambda/2/m * theta(1); 
+J = 1/m * sum(-y.*log(htheta) .- (1 - y) .* log(1.0 - htheta)) + sum(lambda/2/m.*theta.^2);
+J = J - lambda/2/m * theta(1)^2; 
 grad = 1/m * sum((htheta-y) .* X, 1) .+ (lambda/m) * theta';
 grad(1) = grad(1) - lambda/m * theta(1);
 % Instructions: Compute the cost of a particular choice of theta.
