@@ -1,3 +1,4 @@
+%% -*- mode: octave -*-
 %% Machine Learning Online Class - Exercise 3 | Part 1: One-vs-all
 
 %  Instructions
@@ -39,7 +40,7 @@ m = size(X, 1);
 rand_indices = randperm(m);
 sel = X(rand_indices(1:100), :);
 
-displayData(sel);
+%displayData(sel);
 
 fprintf('Program paused. Press enter to continue.\n');
 pause;
@@ -78,7 +79,6 @@ lambda = 0.1;
 
 fprintf('Program paused. Press enter to continue.\n');
 pause;
-
 
 %% ================ Part 3: Predict for One-Vs-All ================
 

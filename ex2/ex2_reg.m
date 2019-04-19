@@ -1,3 +1,4 @@
+%% -*- mode: octave -*-
 %% Machine Learning Online Class - Exercise 2: Logistic Regression
 %
 %  Instructions
@@ -132,7 +133,7 @@ options = optimset('GradObj', 'on', 'MaxIter', 400);
 
 % Optimize
 [theta, J, exit_flag] = ...
-	fminunc(@(t)(costFunctionReg(t, X, y, lambda)), initial_theta, options);
+        fminunc(@(t)(costFunctionReg(t, X, y, lambda)), initial_theta, options);
 
 % Plot Boundary
 plotDecisionBoundary(theta, X, y);
@@ -151,4 +152,3 @@ p = predict(theta, X);
 
 fprintf('Train Accuracy: %f\n', mean(double(p == y)) * 100);
 fprintf('Expected accuracy (with lambda = 1): 83.1 (approx)\n');
-
