@@ -28,8 +28,8 @@ m = size(X, 1);
          
 % You need to return the following variables correctly 
 J = 0;
-Theta1_grad = zeros(size(Theta1));
-Theta2_grad = zeros(size(Theta2));
+Theta1_grad = zeros(size(Theta1));  %  25, 401 
+Theta2_grad = zeros(size(Theta2));  %  10, 26
 
 % ====================== YOUR CODE HERE ======================
 % Instructions: You should complete the code by working through the
@@ -45,6 +45,7 @@ a2 = sigmoid(X*Theta1');
 a2 = [ones(size(a2,1),1) a2];
 a3 = sigmoid(a2*Theta2');
 
+%newy2 = [y==1 y==2 y==3 y==4 y==5 y==6 y==7 y==8 y==9 y==10];
 newy = zeros(size(a3));
 for i = 1:m 
   newy(i,y(i))=1;  
@@ -70,7 +71,24 @@ J = J + reg_term;
 %         Hint: We recommend implementing backpropagation using a for-loop
 %               over the training examples if you are implementing it for the 
 %               first time.
-%
+
+D1 = ones(hidden_layer_size, input_layer_size+1);
+D2 = ones(num_labels, hidden_layer_size);
+% Theta1 is 25, 401 maps from layer 1 to layer 2
+for t = 1:m
+  a1 = X(t,:);              % 1, 401   single row
+  z2 = Theta1 * a1';        % 26, 1  single column
+  a2 = sigmoid(z2);         % 26, 1
+  z3 = Theta2 * [1; a2];    % 10, 1 single column
+  a3 = sigmoid(z3);         % 10, 1  network result
+  delta_3 = a3 - y(t);      % 10, 1
+  delta_2 = (Theta2' * delta_3)(2:end) .* sigmoidGradient(z2);  % 25, 1
+  D2 = D2 .+ delta_3*a2';
+  D1 = D1 .+ delta_2*a1;
+end
+Theta1_grad = (1/m)*D1;
+Theta2_grad = (1/m)*D2;
+
 % Part 3: Implement regularization with the cost function and gradients.
 %
 %         Hint: You can implement this around the code for
