@@ -72,19 +72,21 @@ J = J + reg_term;
 %               over the training examples if you are implementing it for the 
 %               first time.
 
-D1 = ones(hidden_layer_size, input_layer_size+1);
-D2 = ones(num_labels, hidden_layer_size);
-% Theta1 is 25, 401 maps from layer 1 to layer 2
+D1 = zeros(hidden_layer_size, input_layer_size+1);
+D2 = zeros(num_labels, hidden_layer_size+1);
+% Theta1 is 25, 401 maps from layer 1 to layer 2, Theta2 is 10,26
 for t = 1:m
   a1 = X(t,:);              % 1, 401   single row
-  z2 = Theta1 * a1';        % 26, 1  single column
-  a2 = sigmoid(z2);         % 26, 1
-  z3 = Theta2 * [1; a2];    % 10, 1 single column
+  z2 = Theta1 * a1';        % 25, 1  single column
+  a2 = [1; sigmoid(z2)];    % 26, 1
+  z3 = Theta2 * a2;         % 10, 1 single column
   a3 = sigmoid(z3);         % 10, 1  network result
   delta_3 = a3 - y(t);      % 10, 1
+  %delta_2 = (Theta2' * delta_3) .* sigmoidGradient([1; z2]);  % 25, 1
+  %delta_2 = delta_2(2:end);
   delta_2 = (Theta2' * delta_3)(2:end) .* sigmoidGradient(z2);  % 25, 1
-  D2 = D2 .+ delta_3*a2';
-  D1 = D1 .+ delta_2*a1;
+  D2 = D2 + delta_3*a2';
+  D1 = D1 + delta_2*a1;
 end
 Theta1_grad = (1/m)*D1;
 Theta2_grad = (1/m)*D2;
