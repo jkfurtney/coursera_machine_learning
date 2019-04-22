@@ -45,12 +45,7 @@ a2 = sigmoid(X*Theta1');
 a2 = [ones(size(a2,1),1) a2];
 a3 = sigmoid(a2*Theta2');
 
-%newy2 = [y==1 y==2 y==3 y==4 y==5 y==6 y==7 y==8 y==9 y==10];
-newy = zeros(size(a3));
-for i = 1:m 
-  newy(i,y(i))=1;  
-end
-
+newy = bsxfun(@eq, y, 1:num_labels);
 J = 1/m * sum(-newy.*log(a3) .- (1 - newy) .* log(1.0 - a3));
 J = sum(J);
 
@@ -89,7 +84,10 @@ for t = 1:m
   D1 = D1 + delta_2*a1;
 end
 Theta1_grad = (1/m)*D1;
-Theta2_grad = (1/m)*D2;
+Theta2_grad = (1/m)*D2 + (lambda/m)*sum(sum(Theta2(:,2:end)));
+
+treg_1 = (lambda/m)*Theta1(:,2:end)))
+%treg_2 = 
 
 % Part 3: Implement regularization with the cost function and gradients.
 %
