@@ -83,10 +83,15 @@ for t = 1:m
   D2 = D2 + delta_3*a2';
   D1 = D1 + delta_2*a1;
 end
-Theta1_grad = (1/m)*D1;
-Theta2_grad = (1/m)*D2 + (lambda/m)*sum(sum(Theta2(:,2:end)));
+treg_1 = (lambda/m)*Theta1;
+treg_1(:,1) = 0;
+treg_2 = (lambda/m)*Theta2;
+treg_2(:,1) = 0;
 
-treg_1 = (lambda/m)*Theta1(:,2:end)))
+Theta1_grad = (1/m)*D1 .+ treg_1;
+Theta2_grad = (1/m)*D2 .+ treg_2;
+
+
 %treg_2 = 
 
 % Part 3: Implement regularization with the cost function and gradients.
