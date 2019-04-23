@@ -42,25 +42,14 @@ error_val   = zeros(m, 1);
 %
 % Hint: You can loop over the examples with the following:
 %
-%       for i = 1:m
-%           % Compute train/cross validation errors using training examples 
-%           % X(1:i, :) and y(1:i), storing the result in 
-%           % error_train(i) and error_val(i)
-%           ....
-%           
-%       end
-%
-
-% ---------------------- Sample Solution ----------------------
-
-
-
-
-
-
-
-% -------------------------------------------------------------
-
-% =========================================================================
+for i = 1:m
+  xtrain = X(1:i, :);
+  ytrain = y(1:i);
+  theta = trainLinearReg(xtrain, ytrain, 1);
+  [J, grad] = linearRegCostFunction(xtrain, ytrain, theta, 0);
+  error_train(i) = J;
+  [J, grad] = linearRegCostFunction(Xval, yval, theta, 0);
+  error_val(i) = J;
+endfor
 
 end
