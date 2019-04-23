@@ -124,7 +124,7 @@ end
 
 fprintf('Program paused. Press enter to continue.\n');
 pause;
-
+m
 %% =========== Part 6: Feature Mapping for Polynomial Regression =============
 %  One solution to this is to use polynomial regression. You should now
 %  complete polyFeatures to map each example into its powers
@@ -134,7 +134,9 @@ p = 8;
 
 % Map X onto Polynomial Features and Normalize
 X_poly = polyFeatures(X, p);
+m
 [X_poly, mu, sigma] = featureNormalize(X_poly);  % Normalize
+m
 X_poly = [ones(m, 1), X_poly];                   % Add Ones
 
 % Map X_poly_test and normalize (using mu and sigma)
@@ -164,7 +166,7 @@ pause;
 %  lambda to see how the fit and learning curve change.
 %
 
-lambda = 0;
+lambda = 1;
 [theta] = trainLinearReg(X_poly, y, lambda);
 
 % Plot training data and fit
